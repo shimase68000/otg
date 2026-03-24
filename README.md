@@ -100,8 +100,8 @@ alg1: @6543=21=
 
 See full tables:
 
-* DX7 → `examples/dx7.md`
-* YM2151 / YM2203 → `examples/ym2151_ym2203.md`
+* DX7 → [dx7.md](examples/dx7.md)
+* YM2151 / YM2203 → [ym2151_ym2203.md](examples/ym2151_ym2203.md)
 
 ---
 
@@ -152,14 +152,14 @@ OTG replaces numeric identifiers with explicit structural representation.
 
 Full syntax and semantics:
 
-→ `spec/otg-spec-v0.01.md`
+→ [Specification (v0.01)](spec/otg-spec-v0.01.md)
 
 ---
 
 ## Examples
 
-* DX7 algorithms → `examples/dx7.md`
-* YM2151 / YM2203 algorithms → `examples/ym2151_ym2203.md`
+* DX7 algorithms → [dx7.md](examples/dx7.md)
+* YM2151 / YM2203 algorithms → [ym2151_ym2203.md](examples/ym2151_ym2203.md)
 
 ---
 
