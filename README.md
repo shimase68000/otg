@@ -100,8 +100,8 @@ alg1: @6543=21=
 
 See full tables:
 
-* DX7 → [dx7.md](examples/dx7.md)
-* YM2151 / YM2203 → [ym2151_ym2203.md](examples/ym2151_ym2203.md)
+* [DX7 algorithms](examples/dx7.md)
+* [YM2151 / YM2203 algorithms](examples/ym2151_ym2203.md)
 
 ---
 
@@ -146,20 +146,24 @@ OTG was originally developed to solve limitations of traditional FM algorithm re
 
 OTG replaces numeric identifiers with explicit structural representation.
 
+For design background and philosophy:
+
+→ [Design Rationale](docs/rationale.md)
+
 ---
 
 ## Specification
 
 Full syntax and semantics:
 
-→ [Specification (v0.01)](spec/otg-spec-v0.01.md)
+→ [Specification (draft version 0.01)](spec/otg-spec-v0.01.md)
 
 ---
 
 ## Examples
 
-* DX7 algorithms → [dx7.md](examples/dx7.md)
-* YM2151 / YM2203 algorithms → [ym2151_ym2203.md](examples/ym2151_ym2203.md)
+* [DX7 algorithms](examples/dx7.md)
+* [YM2151 / YM2203 algorithms](examples/ym2151_ym2203.md)
 
 ---
 
@@ -171,6 +175,15 @@ OTG is designed to be easily implemented:
 * parser: recursive descent recommended
 * AST: operator / group / parallel / feedback
 * graph: edge-based construction
+
+---
+
+## Related Documents
+
+- [Specification](spec/otg-spec-v0.01.md)
+- [DX7 Examples](examples/dx7.md)
+- [YM2151 / YM2203 Examples](examples/ym2151_ym2203.md)
+- [Design Rationale](docs/rationale.md)
 
 ---
 
