@@ -2,7 +2,7 @@
 
 **OED Operator Topology Glyph (connection_glyph)**
 
-**Date Created:** 2026-03-23
+**Date Created:** 2026-03-23\
 **Author:** UG.
 
 ---
