@@ -2,7 +2,7 @@
 
 **Syntax Specification — draft version 0.01**
 
-**Last Updated:** 2026-03-23
+**Last Updated:** 2026-03-23\
 **Author:** UG.
 
 ---
