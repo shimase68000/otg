@@ -4,7 +4,8 @@
 
 **Date Created:** 2026-03-23\
 **Last Updated:** 2026-08-03\
-**Author:** UG.
+**Author:** UG.\
+**Covers:** OTG Syntax Specification draft 0.02
 
 ---
 
@@ -71,8 +72,6 @@
 * Operator numbering follows the DX7 datasheet convention\
   (see Specification, Section 17)
 * Operator order is unified in descending order (see Specification, Section 18)
-* This table is based on the OED Operator Topology Glyph Syntax Specification\
-  (draft version 0.02)
 
 ---
 
