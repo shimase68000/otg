@@ -3,9 +3,9 @@
 OTG is a standalone DSL for describing operator topology using compact ASCII glyphs.
 
 **Date Created:** 2026-03-23\
-**Last Updated:** 2026-08-03\
+**Last Updated:** 2026-11-18\
 **Author:** UG.\
-**Covers:** OTG Syntax Specification draft 0.02
+**Covers:** OTG Syntax Specification draft 0.03
 
 ---
 
@@ -67,9 +67,8 @@ mix(1,2,3) → 4 → output
 ```
 
 ```
-1 → 4
-2 → 3 → 4
-4 → output
+2 → 3
+mix(1,3) → 4 → output
 ```
 
 Concatenation binds tighter than `-`, so `23` is one branch.
@@ -87,7 +86,7 @@ Concatenation binds tighter than `-`, so `23` is one branch.
 3 → 4 → output
 ```
 
-`=` closes a chain; what follows it starts a new one.
+`=` closes the segment that contains the chain; what follows it starts a new one.
 
 ---
 
@@ -136,14 +135,30 @@ mix(1,2) → 3 → output
 Two rules cover most of the notation:
 
 1. **Adjacency is series, and it binds tighter than `-`.**\
-   In `65-43-2-1=`, the branches are `65`, `43`, `2`, and `1=` — not six\
-   separate operators.
+   In `65-43-2-1=`, the chains are `65`, `43`, `2` and `1` — not six\
+   separate operators. `65`, `43` and `2` are mixed into `1`.
 
-2. **`=` closes a chain.**\
-   Its outputs go to the device output, and anything after it is a new\
-   structure. `@65=@64=321=` is three chains, not one.
+2. **`=` closes the segment that contains the chain.**\
+   A segment is a single chain or a whole parallel. Its exits go to the device\
+   output, and anything after `=` is a new structure. `@65=@64=321=` is three\
+   segments, not one chain. In `65-43-2-1=`, `=` closes the whole parallel, not\
+   only `1`.
 
 Everything else — `( )`, `@`, `$` — modifies what these two rules operate on.
+
+When a group is used as a destination, it is entered at every branch:
+
+```
+1(2-3-)4=
+```
+
+```
+1 → 2
+1 → 3
+mix(2,3) → 4 → output
+```
+
+The same applies to `$` on a group and to the feedback of `@( … )`.
 
 ---
 
@@ -198,7 +213,11 @@ However, a **canonical form** can be defined per device by:
 
 1. Preserving exact topology
 2. Unifying operator ordering (ascending / descending)
-3. Minimizing redundant syntax
+3. Writing each operator as few times as possible
+4. Minimizing redundant syntax
+
+A complete glyph ends closed — with `=`, or with a group whose content ends closed.\
+Examples that end open (such as `@1` above) are fragments.
 
 ---
 
@@ -223,7 +242,7 @@ For design background and philosophy:
 
 Full syntax and semantics:
 
-→ [Specification (draft version 0.02)](spec/otg-spec-v0.02.md)
+→ [Specification (draft version 0.03)](spec/otg-spec-v0.03.md)
 
 ---
 
@@ -246,6 +265,8 @@ OTG is designed to be easily implemented:
 * graph: edge-based construction, with edges held in a **set**
 * identifiers resolve to a node table, not to occurrences — the same identifier\
   appearing twice is the same operator
+* `first()` returns a set of entry nodes; a destination, a `$` target and the\
+  default target of `@( … )` connect to every element of it
 
 The example tables can be used as regression input: parse each entry and compare\
 the resulting edge set against the structure column.
@@ -254,7 +275,7 @@ the resulting edge set against the structure column.
 
 ## Related Documents
 
-* [Specification (draft 0.02)](spec/otg-spec-v0.02.md)
+* [Specification (draft 0.03)](spec/otg-spec-v0.03.md)
 * [DX7 Examples](examples/dx7.md)
 * [YM2151 / YM2203 Examples](examples/ym2151_ym2203.md)
 * [Design Rationale](docs/rationale.md)
@@ -263,10 +284,15 @@ the resulting edge set against the structure column.
 
 ## Status
 
-Draft 0.01 is superseded. The notation is unchanged between 0.01 and 0.02 — every\
-glyph written against 0.01 remains valid and means the same thing — but the\
-written grammar in 0.01 does not correctly describe it. Implementations should be\
-based on 0.02.
+Draft 0.03 is current. Drafts 0.01 and 0.02 are superseded.
+
+Every algorithm in the device tables has the same structure under 0.01, 0.02 and\
+0.03. Eight table entries (YM2151 alg 5, DX7 19–25) are written in 0.03 canonical\
+form; their earlier glyphs remain valid.\
+0.03 changes the meaning of one kind of glyph: a parallel or a multi-segment group\
+used as a destination or feedback target now connects to every branch entry, not\
+the first branch only (Specification, Section 6 and Note on 0.02). Implementations\
+should be based on 0.03.
 
 This specification is subject to future refinement.
 
