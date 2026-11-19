@@ -1,5 +1,11 @@
 # OED Operator Topology Glyph (connection_glyph)
 
+> **Superseded by draft 0.02** (2026-08-03), and by draft 0.03 (2026-11-18), the\
+> current version. See [otg-spec-v0.03.md](otg-spec-v0.03.md).\
+> Sections 4, 4.1, 5.3, 6 and 7 of this draft do not correctly describe the\
+> notation in use; a parser built from them misparses glyphs of the form `A-BC-D=`\
+> and `…=…=`. See "Note on 0.01" in the current specification.
+
 **Syntax Specification — draft version 0.01**
 
 **Last Updated:** 2026-03-23\
