@@ -19,8 +19,8 @@
 >
 > Every algorithm in the YM2151 / YM2203 and DX7 tables keeps its structure. Eight\
 > table entries are rewritten in canonical form under section 12 (OPM 5, DX7\
-> 19–25); the 0.02 glyphs remain valid and equivalent. See Section 21 for the change log and Section 22 for the\
-> conformance vectors.
+> 19–25); the 0.02 glyphs remain valid and equivalent. See Section 21 for the change log\
+> and Section 22 for the conformance vectors.
 
 ---
 
@@ -327,8 +327,9 @@ C1 - C2 - … - Cn -
 mix( exits(C1), …, exits(Cn) )
 ```
 
-where each `Ci` is a chain and `n ≥ 2`, with no destination. An open parallel is incomplete: it must be enclosed in a group\
-that is followed by a further connection, or it must be the operand of a group feedback.
+where each `Ci` is a chain and `n ≥ 2`, with no destination. An open parallel is incomplete:\
+it must be enclosed in a group that is followed by a further connection, or it must be the operand\
+of a group feedback.
 
 ### 5.5 Self Feedback
 
@@ -1004,7 +1005,7 @@ draft version 0.03
 | 2026-03-20 | 0.00    | Initial version |
 | 2026-03-23 | 0.01    | Added `$` (feedback target), defined exclusivity between `@` and `$`, defined the relationship between `@` and `$` within `@(group)`, redefined canonical form priorities, added `a-z` and `0` to short_operator |
 | 2026-08-03 | 0.02    | Grammar corrected to match the notation in use. Series binds tighter than parallel (4.1). `=` defined as chain terminator (4.2). Segment closure rule added (4.3). Parallel operands generalised to chains (5.3). Operator identity defined (3.2). Edge set semantics defined (5.6). `first()` / `exits()` generalised beyond groups (6, 7). `$` target validity constrained (13). Verification material added (22), with device tables moved to `examples/`. **The notation itself is unchanged.** |
-| 2026-11-18 | 0.03    | `=` moved from `<chain>` to the segment level; `=` inside a parallel and after an open parallel rejected (4, 4.2, 5.2). Segment sequencing example corrected (4.3). `$` inside nested `@(group)` bound to the nearest enclosing `@(group)` (9.4, 13). `$` on a group defined as targeting `first(group)` (9.4). `@` on an operator inside `@(group)` defined as self feedback in all cases; the rule that read it as `$` when the operator is in `exits(group)` removed, since it contradicted the example `@($1-2-$3-)4= ≢ @($1-2-@3-)4=` (9.5). Identifier case sensitivity stated; single-character long operator identified with the short operator (3.2). Space restricted to trailing padding (2.1, 13). `=` described as segment terminator (2, 3.3, 4.1, 22.2). Section 22.2 restructured: vector count corrected; `first()` redefined as a set: closed parallel → entries of `C1…Cn-1`, open parallel → entries of all chains, expr → entries of all segments; applied to series destinations, `$` on a group, and the default target of `@(group)` (5, 6, 6.1, 9.1, 9.4); `$` omission rule restated for sets (9.4); canonical form example rewritten (12). Glyph closure required; fragments defined (4.5, 13). Canonical form priority added: fewer occurrences of the same operator (12); OPM 5 and DX7 19–25 rewritten accordingly in `examples/`. Redundant `$` target constraint replaced by the nearest-group rule (13). Vectors for 0.03 and rejection vectors added (22.2). Closed parallel requires at least two branches; `1-2=` rejected (4, 5.3); minimum counts stated for parallels (5.4, 6, 7, 15); `Sn` of an expr may be an open parallel (6, 7); Formal Summary parallel line aligned to sets (15). **Glyphs in the device tables keep their meaning. Glyphs that use a parallel or a multi-segment group as a destination or feedback target change meaning (see Note on 0.02).** |
+| 2026-11-18 | 0.03    | `=` moved from `<chain>` to the segment level; `=` inside a parallel and after an open parallel rejected (4, 4.2, 5.2). Segment sequencing example corrected (4.3). `$` inside nested `@(group)` bound to the nearest enclosing `@(group)` (9.4, 13). `$` on a group defined as targeting `first(group)` (9.4). `@` on an operator inside `@(group)` defined as self feedback in all cases; the rule that read it as `$` when the operator is in `exits(group)` removed, since it contradicted the example `@($1-2-$3-)4= ≢ @($1-2-@3-)4=` (9.5). Identifier case sensitivity stated; single-character long operator identified with the short operator (3.2). Space restricted to trailing padding (2.1, 13). `=` described as segment terminator (2, 3.3, 4.1, 22.2). Section 22.2 restructured and vector count corrected (22.2). `first()` redefined as a set: closed parallel → entries of `C1…Cn-1`, open parallel → entries of all chains, expr → entries of all segments; applied to series destinations, `$` on a group, and the default target of `@(group)` (5, 6, 6.1, 9.1, 9.4); `$` omission rule restated for sets (9.4); canonical form example rewritten (12). Glyph closure required; fragments defined (4.5, 13). Canonical form priority added: fewer occurrences of the same operator (12); OPM 5 and DX7 19–25 rewritten accordingly in `examples/`. Redundant `$` target constraint replaced by the nearest-group rule (13). Vectors for 0.03 and rejection vectors added (22.2). Closed parallel requires at least two branches; `1-2=` rejected (4, 5.3); minimum counts stated for parallels (5.4, 6, 7, 15); `Sn` of an expr may be an open parallel (6, 7); Formal Summary parallel line aligned to sets (15). **Glyphs in the device tables keep their meaning. Glyphs that use a parallel or a multi-segment group as a destination or feedback target change meaning (see Note on 0.02).** |
 
 ### Note on 0.01
 
