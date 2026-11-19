@@ -1,5 +1,9 @@
 # OED Operator Topology Glyph (connection_glyph)
 
+> **Superseded by draft 0.03** (2026-11-18). See [otg-spec-v0.03.md](otg-spec-v0.03.md).\
+> The tables in `examples/` now use 0.03 canonical form; eight entries (OPM 5,\
+> DX7 19–25) require 0.03 and are listed there with their 0.02 glyphs.
+
 **Syntax Specification — draft version 0.02**
 
 **Last Updated:** 2026-08-03\
