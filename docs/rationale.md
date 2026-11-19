@@ -1,9 +1,9 @@
 # Rationale — Why OTG Exists
 
 **Date Created:** 2026-03-23\
-**Last Updated:** 2026-08-03\
+**Last Updated:** 2026-11-18\
 **Author:** UG.\
-**Covers:** OTG Syntax Specification draft 0.02
+**Covers:** OTG Syntax Specification draft 0.03
 
 ---
 
@@ -110,9 +110,12 @@ OTG evolved in the following stages:
 4. Introduction of feedback target (`$`)
 5. Definition of canonical form
 6. Correction of the written grammar to match the notation in use (0.02)
+7. Statement of points left open in 0.02, and `first()` as a set (0.03)
 
 Stage 6 is described below. It is the only stage in which the specification\
 changed without the notation changing.
+
+Stage 7 is described below, after stage 6.
 
 ---
 
@@ -316,6 +319,183 @@ by eye.
 
 That equivalence — formal reading and visual reading agreeing — was the goal from\
 the first sketch. Until 0.02 it held in the notation but not in the document.
+
+---
+
+## Why the Specification Was Revised in 0.03
+
+The points below were either unstated in 0.02 or stated in a way that\
+contradicted 0.02's own examples. Each lists the options that existed and the one\
+adopted.
+
+### Position of `=`
+
+0.02's grammar attached an optional `=` to every chain, so `1-2=-3=` was\
+grammatical. No meaning was stated for it, and no glyph in the device tables\
+uses it.
+
+* Define a meaning: `2 → output`, and `2` also takes part in the mix into `3`.\
+  *Rejected.* `=` reads as a full stop. A structure that continues after a full\
+  stop contradicts the terminating role that 0.02 made primary.
+* **Allow `=` only after the last chain of a segment.** *Adopted.* `=` moves from\
+  `<chain>` to the segment level in the grammar. `1-2=-3=` and `1-2-=` are\
+  rejected.
+
+### Minimum size of a parallel
+
+0.02's grammar for a closed parallel, `<chain> "-" <chain> { "-" <chain> }`,\
+admitted `1-2=`: one branch and a destination. The open parallel already required\
+two branches, through its trailing `-`.
+
+* Allow it as a one-branch mix, equivalent to the series `12=`.\
+  *Rejected.* Two ways to write a series, and `-` would no longer mean that\
+  something is mixed.
+* **Require at least two branches.** *Adopted.* The grammar is\
+  `<chain> "-" <chain> "-" <chain> { "-" <chain> }`, and sections 5.3, 5.4, 6, 7\
+  and 15 state `n ≥ 3` for a closed parallel and `n ≥ 2` for an open one. No\
+  table glyph has a one-branch parallel.
+
+### `$` in nested `@(group)`
+
+0.02 said `$` may appear anywhere inside `@(group)`, without saying which\
+`@(group)` it belongs to when they are nested.
+
+* The outermost `@(group)`.
+* Every enclosing `@(group)`.
+* **The nearest enclosing `@(group)`.** *Adopted.* The target is decided by the\
+  group the reader is looking at, and an inner group's feedback can be read\
+  without the surrounding expression.
+
+### `@` on an operator inside `@(group)`
+
+0.02 section 9.5 stated that `@` on an operator in `exits(group)` is read as `$`,\
+and gave `@($1-2-$3-)4= ≢ @($1-2-@3-)4=`, where `3` is in `exits(group)`. The two\
+cannot both hold.
+
+* Keep the rule and correct the example to `≡`.
+* **Keep the example and remove the rule.** *Adopted.* `@` on an operator is self\
+  feedback everywhere, and is not counted as a `$`. This keeps *one symbol, one\
+  meaning* for `@`. The equivalence `@($12$3)4= ≡ @($12@3)4=` still holds,\
+  because `exits(group)` is `{3}` and both forms add `3 → 3`; it is a coincidence\
+  of edges, not a reading of `@` as `$`.
+
+With the rule removed, `@(12@3)4=` adds both `3 → 3` and the default feedback\
+`3 → 1`.
+
+### `$` on a group
+
+The grammar allowed `$(12)`; 0.02 did not say what it means.
+
+* Reject `$` on a group.
+* **Target `first(group)`.** *Adopted.* `$(12) ≡ $12`. A feedback target is a\
+  destination, and `first()` already defines where a group is entered.
+
+### `first()` as a set
+
+Defining `$` on a group raised the case `$(1-2-)`. Under 0.02, `first()` of a\
+parallel was `first(C1)`, so `$(1-2-)` would target `1` only. The reading\
+intended was `$1` and `$2`. The same question applied to a group used as a\
+destination: `5(1-2-)` was not defined by intent, only by the 0.02 table.
+
+* Distribute `$` over branches, and keep `first()` unchanged for connections.\
+  *Rejected.* A feedback target and a connection destination would be decided by\
+  two different definitions of where a group is entered.
+* **Redefine `first()` as the set of entries.** *Adopted.* Closed parallel: the\
+  entries of `C1 … Cn-1` (the destination chain `Cn` receives the mix, not\
+  connections from outside). Open parallel: the entries of all chains.
+
+This left two further choices.
+
+For the default target of `@(group)` without `$`:
+
+* Keep `first(C1)` for the default target only. Existing examples in sections\
+  9.4 and 12 stay as written, at the cost of a second definition of entry.
+* **Use the same set.** *Adopted.* One definition serves destinations, `$`\
+  targets and the default feedback target. Section 9.4's `@(1-2-)3=` and section\
+  12's canonical example are rewritten.
+
+For an expr of several segments, as in `1(23=45=)`:
+
+* `first(S1)`, as in 0.02.
+* **The union over all segments.** *Adopted*, for the same reason as the\
+  parallel: every segment is an entry.
+
+The readings were fixed by eighteen worked examples (sections 6.1, 9.1, 9.4)\
+before the definition was written, and the definition was checked against them.
+
+Before adoption, two checks were made:
+
+* **Device tables.** All 40 glyphs, as written in 0.02, give the same edge set\
+  as under 0.02. None of them uses a parallel or multi-segment group as a\
+  destination or feedback target.
+* **Expressiveness.** Every glyph of up to eight characters over three operators\
+  was parsed under both definitions. No edge set expressible under 0.02 is lost.\
+  The 0.02 reading remains writable by placing the source in the first branch's\
+  chain (`51-2-` for 0.02's `5(1-2-)`) or by naming the target with `$`\
+  (`@($1-2-)` for 0.02's `@(1-2-)`).
+
+This is the one change in 0.03 that gives a different structure to a glyph valid\
+under both 0.02 and 0.03.
+
+### Identifier case
+
+* Case-insensitive.
+* **Case-sensitive.** *Adopted.* `a-z` was added to `<short_operator>` in 0.01 as\
+  additional identifiers, which reads `A` and `a` as distinct. The alias macro\
+  layer (issue #3) adopted case-sensitive alias names on the same basis.
+
+### Spaces
+
+0.02 described space as padding used only for storage, without stating where it\
+may appear.
+
+* Spaces anywhere, ignored by the parser.\
+  *Rejected.* `12 34` would read as two structures while parsing as one chain.
+* Leading and trailing.
+* **Trailing only.** *Adopted.* Space fills a fixed-length storage field after the\
+  glyph and is removed before parsing. A space elsewhere is invalid. This matches\
+  the alias layer, where whitespace around `:=` is prohibited.
+
+### Glyph closure
+
+0.02 allowed the last segment of a glyph to be open. A glyph such as `@134=23`\
+was grammatical: `23` ends with no destination.
+
+* Require every glyph to end with `=`.\
+  *Rejected.* `(@1-2-3-4=)` and `@1(2=3=4=)` end with a group whose content is\
+  already closed; a trailing `=` would add nothing.
+* **Require every glyph to end closed: with `=`, or with a group whose own last\
+  segment is closed.** *Adopted.* Inside a group the last segment may still be\
+  open, as in `(1-2-)3`, since what follows the group completes it.
+
+Examples in the specification that end open are kept as written and defined as\
+fragments, since a fragment shows the part under discussion with less noise.
+
+Under this rule, the shorter forms `@124=34` (OPM 3) and `@14=234` (OPM 2) are\
+invalid. Their closed forms `@124=34=` and `@14=234=` are the same length as the\
+table glyphs.
+
+### Canonical form: occurrences of the same operator
+
+With `first()` as a set, branching from one operator can be written with a group\
+instead of repeating the operator (`@12=@13=@14=` ≡ `@1(2=3=4=)`). Section 12 did\
+not say which is canonical. Its priority of fewer symbols alone selects the group\
+in some table entries and the repetition in others, and it also admits\
+`@124=34=` against `@12-3-4=` at equal length.
+
+* Use grouping only where it is shorter.\
+  Changes OPM 5, DX7 22 and 24. Leaves the choice between `@124=34=` and\
+  `@12-3-4=` to a further rule.
+* **Add a priority: fewer occurrences of the same operator, above the removal of\
+  redundant symbols.** *Adopted.* One rule decides both cases: fan-out is grouped,\
+  and fan-in is written with `-` rather than by repeating the destination. It\
+  applies even where the grouped form is longer.
+
+Ordering stays above it. For DX7 22, `21=@6(5=4=3=)` is shorter than\
+`@6(5=4=3=)=21=`, but the device uses descending order.
+
+Table entries rewritten: YM2151 / YM2203 algorithm 5, DX7 algorithms 19–25. Their\
+structures are unchanged, and their 0.02 glyphs remain valid.
 
 ---
 
